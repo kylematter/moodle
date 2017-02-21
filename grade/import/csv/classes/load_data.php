@@ -296,7 +296,7 @@ class gradeimport_csv_load_data {
         $newgrade->itemid = $gradeitem->id;
         if ($gradeitem->gradetype == GRADE_TYPE_SCALE and $verbosescales) {
             if ($value === '' or $value == '-') {
-                $value = null; // No grade.
+                return $this->newgrades; // Ignore a blank or dash.
             } else {
                 $scale = $gradeitem->load_scale();
                 $scales = explode(',', $scale->scale);
@@ -312,7 +312,7 @@ class gradeimport_csv_load_data {
             $newgrade->finalgrade = $value;
         } else {
             if ($value === '' or $value == '-') {
-                $value = null; // No grade.
+                return $this->newgrades; // Ignore a blank or dash.
             } else {
                 // If the value has a local decimal or can correctly be unformatted, do it.
                 $validvalue = unformat_float($value, true);
